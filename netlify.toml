@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# Serves index.html for any path that isn't a real file - not strictly
+# needed today (the site is a single page with anchor links, no
+# react-router routes), but harmless now and needed the moment real routes
+# get added later, so it's a cheap default to have in place from day one.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
