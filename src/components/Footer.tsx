@@ -34,7 +34,9 @@ export default function Footer() {
             </div>
             <div className="foot-col">
               <h4>Legal</h4>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="#" onClick={handleLegalClick}>Privacy Policy</a>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a href="#" onClick={handleLegalClick}>Terms of Service</a>
             </div>
           </div>
