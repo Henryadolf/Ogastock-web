@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
 
-// PLACEHOLDER — replace with the real contact details before launch.
-const CONTACT_EMAIL = '[hello@ogastock.com]';
-const CONTACT_PHONE = '[+234 …]';
+const CONTACT_EMAIL = 'hello@ogastock.com';
+const CONTACT_PHONE_DISPLAY = '+234 906 201 6800';
 
 export default function Contact() {
   const ref = useReveal<HTMLDivElement>();
   const [formNote, setFormNote] = useState('');
 
-  // PLACEHOLDER handler — wire this to a real form service (e.g. Formspree)
-  // or backend endpoint later. Currently just mirrors the original static
-  // site's behavior: shows a note, submits nothing anywhere.
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setFormNote("Thanks — this form isn't wired up yet. Connect it to email or a form service.");
+    const data = new FormData(e.currentTarget);
+    const name = data.get('name') as string;
+    const biz = data.get('biz') as string;
+    const phone = data.get('phone') as string;
+    const msg = data.get('msg') as string;
+
+    const subject = `One13 setup request${biz ? ` — ${biz}` : ''}`;
+    const body = [
+      `Name: ${name}`,
+      biz ? `Business: ${biz}` : null,
+      `Phone/WhatsApp: ${phone}`,
+      msg ? `What they sell: ${msg}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setFormNote(`Opening your email app to send this to us — if nothing happens, email us directly at ${CONTACT_EMAIL}.`);
   }
 
   return (
@@ -34,7 +47,7 @@ export default function Contact() {
             </div>
             <div className="cm">
               <span className="k">WhatsApp</span>
-              <span className="v" id="c-phone">{CONTACT_PHONE}</span>
+              <span className="v" id="c-phone">{CONTACT_PHONE_DISPLAY}</span>
             </div>
             <div className="cm">
               <span className="k">Based in</span>
